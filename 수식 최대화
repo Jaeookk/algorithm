@@ -1,0 +1,39 @@
+from itertools import permutations
+
+def cal(a,b,x):
+    if x == '*':
+        return a*b
+    elif x == '+':
+        return a+b
+    elif x == '-':
+        return a-b
+    
+def solution(expression):
+    answer=0
+    op = ['*','+','-']
+    num = expression.replace('*',' ')
+    num = num.replace('+',' ')
+    num = num.replace('-',' ')
+    num = list(map(int,num.split()))
+    
+    operator = [x for x in expression if not x.isdecimal()]
+    
+    for _op in permutations(op):
+        my_num = num
+        my_operator = operator
+        for i in _op :
+            op_stack , stack = [], []
+            stack.append(my_num[0])
+            for j in range(len(my_operator)):
+                stack.append(my_num[j+1])
+                op_stack.append(my_operator[j])
+            
+                if op_stack[-1] == i:
+                    stack.append(cal(stack.pop(-2),stack.pop(-1),op_stack.pop()))
+                
+            my_num=stack
+            my_operator=op_stack
+        
+        answer = max(answer, abs(my_num[0]))
+    
+    return answer
