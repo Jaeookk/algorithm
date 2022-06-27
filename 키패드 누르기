@@ -1,0 +1,44 @@
+def solution(numbers, hand):
+    answer = ''
+    # l = [1,4,7]
+    # r = [3,6,9]
+    # ex = [2,5,8,0]
+    num = [['1','2','3'],
+          ['4','5','6'],
+          ['7','8','9'],
+          ['*','0','#']]
+    num_dict = {1:(0,0), 2:(0,1) , 3:(0,2), 4:(1,0),5:(1,1),6:(1,2),7:(2,0),8:(2,1),9:(2,2),'*':(3,0),0:(3,1),'#':(3,2)}
+    
+    myhand = ['*','#']
+    for i in numbers:
+        for j in range(4):
+            if str(i) in num[j][0]:
+                myhand[0] = i
+                answer += 'L'
+            
+            elif str(i) in num[j][2]:
+                myhand[1] = i
+                answer += 'R'
+            elif str(i) in num[j][1]:
+                x,y = num_dict.get(i)
+                xl, yl = num_dict.get(myhand[0])
+                xr, yr = num_dict.get(myhand[1])
+                if (abs(x-xl)+abs(y-yl)) > (abs(x-xr)+abs(y-yr)):
+                    myhand[1]=i
+                    answer +='R'
+                elif (abs(x-xl)+abs(y-yl)) < (abs(x-xr)+abs(y-yr)):
+                    myhand[0]=i
+                    answer +='L'  
+                elif (abs(x-xl)+abs(y-yl)) == (abs(x-xr)+abs(y-yr)):
+                    if hand == 'right':
+                        myhand[1]=i
+                        answer +='R'                      
+                    else:
+                        myhand[0]=i
+                        answer +='L'
+                
+    print(num_dict.get(1))
+                
+        
+    
+    return answer
