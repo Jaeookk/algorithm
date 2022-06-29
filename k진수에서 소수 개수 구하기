@@ -1,0 +1,56 @@
+def isprime(n):
+    if n <= 1: return False
+    i = 2
+    while i*i <= n:
+        if n%i == 0: return False
+        i += 1
+    return True
+
+def solution(n, k):
+    answer = 0
+    
+    k_num = []
+    while n > 0:
+        k_num.append(str(n%k))
+        n = n//k
+    k_num = ''.join(reversed(k_num)).split('0')
+    # print(k_num)
+    for num in k_num:
+        if num and isprime(int(num)):
+            answer += 1
+    
+#     # 에라토스테네스의 체 사용 안한 이유 => https://blog.encrypted.gg/1026
+#     a = [False, False] + [True]*(n-1)
+#     primes = []
+#     for i in range(2, n+1):
+#         if a[i]:
+#             primes.append(i)
+#             for j in range(2*i, n+1, i):
+#                 a[j] = False
+#     k_num = []
+#     while n > (k-1):
+#         k_num.append(str(n%k))
+#         n = n//k
+#         if n < k:
+#             k_num.append(str(n))
+#     k_num = ''.join(reversed(k_num))
+    
+#     for i in primes:
+#         if str(i) in k_num and '0' not in str(i):
+#             # print(str(i))
+#             tmp = k_num
+#             tmp = tmp.replace(str(i),'x')
+#             print(tmp)
+#             # print(k_num)
+            
+#             for j in range(len(tmp)):
+#                 if tmp[j] == 'x':
+#                     if j == 0 and tmp[j+1]=='0':
+#                         answer += 1
+#                     elif j == len(tmp)-1 and tmp[j-1]=='0':
+#                         answer += 1
+#                     elif j < len(tmp)-1 and tmp[j-1]==tmp[j+1]=='0':
+#                         answer += 1
+
+
+    return answer
