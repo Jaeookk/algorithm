@@ -1,0 +1,31 @@
+import bisect, itertools, collections
+
+def solution(info, query):
+    """
+    1. 하나의 info에서 나올 수 있는 16가지의 key를 만들어서 infomap[key]에 값을 추가해줍니다.
+    2. 이분탐색을 위해 infomap의 값들을 정렬합니다.
+    3. query의 값을 key로 만들고 이분탐색으로 point 이상의 값 개수를 구합니다.
+    """
+    infomap = collections.defaultdict(list)
+    binarys = list(itertools.product((True,False), repeat=4))
+    for x in info:
+        x = x.split()
+        for binary in binarys:
+            key = ''.join([x[i] if binary[i] else '-' for i in range(4)])
+            infomap[key].append(int(x[4]))
+    print(infomap)
+    
+    for k in infomap.keys():
+        infomap[k].sort()
+    # print(infomap)
+    
+    answers = []
+    for q in query:
+        l,_,p,_,c,_,f,score = q.split()
+        # print(l,p,c,f)
+        key = ''.join([l,p,c,f])
+        # print(key)
+        i = bisect.bisect_left(infomap[key], int(score))
+        answers.append(len(infomap[key])-i)
+                        
+    return answers
