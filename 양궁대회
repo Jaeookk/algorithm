@@ -1,0 +1,30 @@
+from itertools import combinations_with_replacement
+
+def solution(n, info):
+    answer = [-1]
+    max_gap = -1
+    total_cases = list(combinations_with_replacement(range(0, 11), n))
+    # print(total_cases[-1])
+    
+    for case in total_cases:
+        ryan_info = [0] * 11
+        apeach_score, ryan_score = 0, 0
+        
+        for score in case:
+            ryan_info[10 - score] += 1
+        
+        for i in range(len(info)):
+            if info[i] == ryan_info[i] == 0:
+                continue
+            elif info[i] >= ryan_info[i]:
+                apeach_score += 10 - i
+            else:
+                ryan_score += 10 - i
+            
+        if ryan_score > apeach_score:
+            gap = ryan_score-apeach_score
+            if gap > max_gap:
+                answer = ryan_info
+                max_gap = gap
+    
+    return answer
