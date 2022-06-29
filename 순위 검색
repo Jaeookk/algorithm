@@ -7,6 +7,7 @@ def solution(info, query):
     3. query의 값을 key로 만들고 이분탐색으로 point 이상의 값 개수를 구합니다.
     [출처] 유강현
     """
+    
     infomap = collections.defaultdict(list)
     binarys = list(itertools.product((True,False), repeat=4))
     for x in info:
