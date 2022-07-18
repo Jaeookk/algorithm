@@ -5,7 +5,7 @@ def solution(n, weak, dist):
     length = len(weak)
     for i in range(len(weak)):
         weak.append(weak[i] + n)
-    print(weak)
+    # print(weak)
     all_dist = list(permutations(dist, len(dist)))
     
     
