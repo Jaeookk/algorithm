@@ -20,6 +20,7 @@ def solution(n, weak, dist):
                         break
                     distance = weak[i] + d[cnt - 1]
             result.append(cnt)
+            
     answer = min(result)
     if answer > len(dist):
         return -1
