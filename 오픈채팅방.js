@@ -1,11 +1,13 @@
 function solution(record) {
   let answer = [];
   let ansMap = {};
+
   for (let i = 0; i < record.length; i++) {
     const id = record[i].split(" ")[1];
     const name = record[i].split(" ")[2];
     if (name) ansMap[id] = name;
   }
+
   for (let i = 0; i < record.length; i++) {
     const flag = record[i].split(" ")[0];
     const id = record[i].split(" ")[1];
