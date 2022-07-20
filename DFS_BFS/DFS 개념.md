@@ -118,6 +118,8 @@ print(graph)
 * 이러한 과정을 반복하였을 때 **전체 노드의 탐색 순서** (스택에 들어간 순서)는 다음과 같습니다.  
 ![image](https://user-images.githubusercontent.com/78528903/179975371-0795dc8e-7a6a-454b-a40b-f53431fd5878.png)
 
+* 깊이 우선 탐색 알고리즘인 DFS는 탐색을 수행함에 있어서 테이터의 개수가 N개인 경우 **$O(N)$** 의 시간이 소요된다.
+
 ```python
 # DFS 메서드 정의
 def dfs(graph, v, visited):
