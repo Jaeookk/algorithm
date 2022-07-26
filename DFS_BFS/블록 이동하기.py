@@ -2,7 +2,6 @@ from collections import deque
 
 def solution(board):
     n = len(board)
-    
     queue = deque()
     queue.append(({(0,0), (0,1)}, 0)) # 로봇의 좌표는 set 이용
     visited = []
