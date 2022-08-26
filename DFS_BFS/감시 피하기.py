@@ -47,7 +47,6 @@ def dfs(count):
                 graph[i][j] = 'X'
                 count -= 1
 
-    
 result = False
 dfs(0)
 if result:
