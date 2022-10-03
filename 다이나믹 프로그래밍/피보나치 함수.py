@@ -15,3 +15,5 @@ def fibonacci(num):
 
 for _ in range(T):
     fibonacci(int(input()))
+
+# 규칙만 발견하면 쉬운 문제.
