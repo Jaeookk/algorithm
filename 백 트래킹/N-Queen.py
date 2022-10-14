@@ -1,8 +1,7 @@
 def is_promising(x, y, row):
     for i in range(x):  # 현재 row index 이전의 모든 row에 대하여
-        if y == row[i] or abs(y - row[i]) == abs(
-            x - i
-        ):  # 같은 열에 위치 하지 않고 대각선에도 위치 하지 않는지 체크
+        # 같은 열에 위치 하지 않고 대각선에도 위치 하지 않는지 체크
+        if y == row[i] or abs(y - row[i]) == abs(x - i):
             return False
     return True
 
