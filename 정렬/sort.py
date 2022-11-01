@@ -49,6 +49,33 @@ def quick_sort(array):
     return quick_sort(left_side) + [pivot] + quick_sort(right_side)
 
 
+def merge_sort(array):
+    # 두 부분으로 쪼개는 작업을 재귀적으로 반복
+    if len(array) < 2:
+        return array
+
+    mid = len(array) // 2
+    low_arr = merge_sort(array[:mid])
+    high_arr = merge_sort(array[mid:])
+    print("-" * 40)
+    print(f"low_arr : {low_arr} , high_arr : {high_arr}")
+
+    # 쪼갠 순서의 반대로 작은 값부터 병합
+    merged_arr = []
+    l = h = 0
+    while l < len(low_arr) and h < len(high_arr):
+        if low_arr[l] < high_arr[h]:
+            merged_arr.append(low_arr[l])
+            l += 1
+        else:
+            merged_arr.append(high_arr[h])
+            h += 1
+    merged_arr += low_arr[l:]
+    merged_arr += high_arr[h:]
+    print(f"merged_arr : {merged_arr}")
+    return merged_arr
+
+
 if __name__ == "__main__":
     array = [5, 7, 9, 0, 3, 1, 6, 2, 4, 8]
     print("before: ", array)
@@ -56,4 +83,5 @@ if __name__ == "__main__":
     # selection_sort(array)
     # insertion_sort(array)
     # array = quick_sort(array)
+    array = merge_sort(array)
     print("after: ", array)
