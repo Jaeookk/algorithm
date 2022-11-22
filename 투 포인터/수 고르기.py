@@ -7,6 +7,7 @@ arr.sort()
 
 min_value = sys.maxsize
 end = 0
+
 for start in range(n):
     while end < n and (arr[end] - arr[start] < m):
         end += 1
