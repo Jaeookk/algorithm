@@ -7,11 +7,9 @@ def solution(n, k):
     arr = [i for i in range(1, n+1)]
     
     for i in range(n-1,0,-1):
-        q = (k - 1) // factorial(i)
-        idx = q % len(arr)
-
+        idx = (k-1) // factorial(i)
         answer.append(arr.pop(idx))
-
+        k -= idx*factorial(i)
     answer.extend(arr)
 
     return answer
