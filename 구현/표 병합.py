@@ -1,57 +1,67 @@
-def solution(commands):
-    answer = []
-    graph = [['EMPTY']*51 for _ in range(51)]
-    state = [[]*51 for _ in range(51)]
+# https://school.programmers.co.kr/learn/courses/30/lessons/150366#
 
-    for command in commands:
-        order, *re = command.split()
-        
-        if order == "UPDATE":
-            if len(re) == 3:
-                r,c = int(re[0]), int(re[1])
-                old_state = state[r][c]
-                for i in range(51):
-                    for j in range(51):
-                        if state[i] == old_state:
-                            graph[i][j] = re[2]
-            else:
-                for i in range(51):
-                    for j in range(51):
-                        if re[0] == graph[i][j]:
-                            graph[i][j] = re[1]
-        
-        elif order == "MERGE":
-            r1,c1,r2,c2 = map(int,re)
-            change = None
-            if graph[r1][c1] == '' and graph[r2][c2] != '':
-                change = graph[r2][c2]
-            elif graph[r1][c1] != '' and graph[r2][c2] == '':
-                change = graph[r1][c1]
-            else:
-                change = graph[r1][c1]
-            olde_state = state[r2][c2]
+def solution(commands): 
+    def update(*args):
+        if len(args) == 3:
+            r,c = int(args[0]), int(args[1])
+            old_state = state[r][c]
             for i in range(51):
                 for j in range(51):
                     if state[i][j] == old_state:
-                        state[i][j] = state[r1][c1]
-                        graph[i][j] = change
-                    
-        elif order == "UNMERGE":
-            r,c = map(int,re)
-            x = graph[r][c]
-            for i in range(len(stack)):
-                if (r,c) in stack[i]:
-                    arr = list(stack[i])
-                    for j in range(len(arr)):
-                        r1,c1 = arr[j]
-                        graph[r1][c1] = ''
-            graph[r][c] = x
-
+                        graph[i][j] = args[2]
         else:
-            r,c = map(int, re)
-            if graph[r][c] == '':
-                answer.append("EMPTY")
-                continue
-            answer.append(graph[r][c])
+            for i in range(51):
+                for j in range(51):
+                    if graph[i][j] == args[0]:
+                        graph[i][j] = args[1]
+                            
+    def merge(args):
+        r1,c1,r2,c2 = map(int,args)
+        change = None
+        if graph[r1][c1] == 'EMPTY' and graph[r2][c2] != 'EMPTY':
+            change = graph[r2][c2]
+        elif graph[r1][c1] != 'EMPTY' and graph[r2][c2] == 'EMPTY':
+            change = graph[r1][c1]
+        elif graph[r1][c1] != 'EMPTY' and graph[r2][c2] != 'EMPTY':
+            change = graph[r1][c1]
 
+        old_state = state[r2][c2]
+        for i in range(51):
+            for j in range(51):
+                if state[i][j] == old_state:
+                    state[i][j] = state[r1][c1]
+        if change:
+            for i in range(51):
+                for j in range(51):
+                    if state[i][j] == state[r1][c1]:
+                        graph[i][j] = change
+        
+    def unmerge(args):
+        r,c = map(int,args)
+        old_value = graph[r][c]
+        old_state = state[r][c]
+        for i in range(51):
+            for j in range(51):
+                if state[i][j] == old_state:
+                    state[i][j] = (i,j)
+                    graph[i][j] = "EMPTY"
+        graph[r][c] = old_value
+        
+    def print_(args):
+        r,c = map(int, args)
+        answer.append(graph[r][c])
+    
+    answer = []
+    graph = [["EMPTY"]*51 for _ in range(51)]
+    state = [[(i,j) for j in range(51)] for i in range(51)]
+    for command in commands:
+        order, *re = command.split()  
+        if order == "UPDATE":
+            update(*re)
+        elif order == "MERGE":
+            merge(re)
+        elif order == "UNMERGE":
+            unmerge(re)
+        else:
+            print_(re)
     return answer
