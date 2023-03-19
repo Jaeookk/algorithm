@@ -2,8 +2,9 @@
 def solution(m, n, startX, startY, balls):
     answer = []
     # 선대칭과 점대칭을 이용
-    # 목표 공이 벽에 안 붙어 있는 경우 -> 목표 공이 가까운 벽에 대칭 -> 최소 거리를 위한 시작 공 위치(-startX, startY) or (startX, -startY)
-    # 목표 공이 벽에 붙어 있는 경우 -> 원 쿠션을 해야 하므로 반대쪽 벽을 맞춰야함 -> (startX + (m - startX) * 2, startY) or (startX, startY + (n - startY) * 2)
+    # 좌측 아래가 (0,0)이라고 하면
+    # 좌측 or 아래 벽에 대칭인 경우 -> (-startX, startY) or (startX, -startY)
+    # 우측 or 위 벽으로 대칭 할 경우 -> (startX + (m - startX) * 2, startY) or (startX, startY + (n - startY) * 2)
     targets = [(-startX, startY), (startX, 2 * n - startY), (2 * m - startX, startY), (startX, -startY)]
     for ball in balls:
         new_targets = [targets[0], targets[1], targets[2], targets[3]]
