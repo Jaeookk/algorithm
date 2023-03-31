@@ -1,7 +1,3 @@
-# '.': 빈 공간
-# '#': 벽
-# '@': 상근이의 시작 위치
-# '*': 불
 import sys
 from collections import deque
 
@@ -18,7 +14,7 @@ def bfs():
             nx = x + dx[i]
             ny = y + dy[i]
 
-            if 0 <= nx < h and 0 <= ny < w:
+            if 0 <= nx < r and 0 <= ny < c:
                 if f_visited[nx][ny] == -1 and graph[nx][ny] != "#":
                     f_visited[nx][ny] = f_visited[x][y] + 1
                     f_queue.append((nx, ny))
@@ -29,12 +25,10 @@ def bfs():
             nx = x + dx[i]
             ny = y + dy[i]
 
-            if 0 <= nx < h and 0 <= ny < w:
+            if 0 <= nx < r and 0 <= ny < c:
                 if j_visited[nx][ny] == -1 and graph[nx][ny] != "#":
-                    if (
-                        f_visited[nx][ny] == -1
-                        or f_visited[nx][ny] > j_visited[x][y] + 1
-                    ):  # 불이 있지 않거나, 아직 불이 도달하기 전이라면
+                    if f_visited[nx][ny] == -1 or f_visited[nx][ny] > j_visited[x][y] + 1:
+                        # 불이 있지 않거나, 아직 불이 도달하기 전이라면
                         j_visited[nx][ny] = j_visited[x][y] + 1
                         j_queue.append((nx, ny))
             else:
@@ -43,24 +37,20 @@ def bfs():
     return "IMPOSSIBLE"  # not escape map
 
 
-t = int(input())
-for _ in range(t):
-    w, h = map(int, input().split())
-    graph = [list(input().strip()) for _ in range(h)]
-    f_queue, j_queue = deque(), deque()  # declare fire, jihoon queue
-    f_visited, j_visited = [[-1] * w for _ in range(h)], [
-        [-1] * w for _ in range(h)
-    ]  # declare fire, jihoon visited
+r, c = map(int, input().split())
+graph = [list(input().strip()) for _ in range(r)]
+f_queue, j_queue = deque(), deque()  # declare fire, jihoon queue
+f_visited, j_visited = [[-1] * c for _ in range(r)], [[-1] * c for _ in range(r)]  # declare fire, jihoon visited
 
-    for i in range(h):
-        for j in range(w):
-            if graph[i][j] == "*":
-                f_queue.append((i, j))
-                f_visited[i][j] = 0
-            elif graph[i][j] == "@":
-                j_queue.append((i, j))
-                j_visited[i][j] = 0
-    print(bfs())
+for i in range(r):
+    for j in range(c):
+        if graph[i][j] == "F":
+            f_queue.append((i, j))
+            f_visited[i][j] = 0
+        elif graph[i][j] == "J":
+            j_queue.append((i, j))
+            j_visited[i][j] = 0
+print(bfs())
 
 # # 시간초과 풀이
 # from collections import deque
