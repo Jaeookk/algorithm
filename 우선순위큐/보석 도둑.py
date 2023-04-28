@@ -6,12 +6,12 @@ import heapq
 
 input = sys.stdin.readline
 
-n, k = map(int, input().split())  # n
-jewel = [list(map(int, input().rstrip().split())) for _ in range(n)]
-jewel = deque(sorted(jewel, key=lambda x: x[0]))
+n, k = map(int, input().split())  # n : 보석개수, k : 가방개수
+jewel = [list(map(int, input().rstrip().split())) for _ in range(n)]  # [[무게, 가격]]
+jewel = deque(sorted(jewel, key=lambda x: x[0]))  # 무게순 오름차순
 
 bag = [int(input().rstrip()) for _ in range(k)]
-bag.sort()  # 가방은 최대 무게가 가장 작은 가방부터.
+bag.sort()  # 오름차순
 
 max_heap = []
 answer = 0
