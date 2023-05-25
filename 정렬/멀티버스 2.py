@@ -1,3 +1,5 @@
+# 백준 18869 골드4
+
 from collections import defaultdict
 
 
@@ -15,6 +17,4 @@ for i in range(m):
     universes[s] += 1
 
 print(universes)
-print(
-    sum(list(map(lambda x: x * (x - 1) // 2, universes.values())))
-)  # 구성이 같은데 순서만 다른 우주의 쌍은 한 번만 센다.
+print(sum(list(map(lambda x: x * (x - 1) // 2, universes.values()))))  # 구성이 같은데 순서만 다른 우주의 쌍은 한 번만 센다.
