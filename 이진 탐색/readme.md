@@ -109,6 +109,56 @@ else:
 ```
 <br/>
 
+
+> **Lower bound**
+```python
+def lower_bound(target, len):
+    start = 0
+    end = len
+    while start < end:
+        mid = (start + end) // 2
+        if arr[mid] >= target:
+            end = mid
+        else:
+            start = mid + 1
+    return start
+```
+arr[mid]가 target보다 크다는 정보만 가지고 있으면 mid가 target이 들어갈 수 있는 가장 왼쪽 위치일 수도 있다는걸 생각해야 한다.
+
+만약 예를 들어 arr[3] = 6, arr[4] = 6, target = 10이라고 한다면, 10이 들어갈 수 있는 가장 왼쪽 위치가 mid, 즉 5번째가 된다. 
+
+그렇기 때문에 arr[mid] >= target일 때에는 end = mid로 변경해야 한다.
+
+즉, 그림으로 나타내자면 아래와 같다.
+
+![](https://velog.velcdn.com/images/wodnr0710/post/41bd1f9c-bf77-4f0a-8761-a89de4dd3204/image.png)
+
+arr[mid] >= target일 때에는 초록색 구간으로, end = mid가 되고, arr[mid] < target일 때에는 하늘색 구간으로, start = mid + 1이 된다.
+
+<br/>
+
+> **Upper bound**
+```python
+def upper_bound(target, len):
+    start = 0
+    end = len
+    while start < end:
+        mid = (start + end) // 2
+        if arr[mid] > target:
+            end = mid
+        else:
+            start = mid + 1
+    return start
+```
+**가장 오른쪽 위치를 구하는 것**은 가장 왼쪽의 위치를 구할때랑 형태는 비슷한데, **arr[mid] = target일 때에만 달라진다.**
+
+![](https://velog.velcdn.com/images/wodnr0710/post/bebd6006-b694-4fd5-856c-2f3354bf8960/image.png)
+
+가장 오른쪽 위치를 구할 때에는 arr[mid] = target일 때 하늘색 구간이 된다.
+왜냐하면 가장 오른쪽 위치는 target보다 큰 수가 최초로 나온 위치이기 때문이다.
+
+<br/>
+
 ## 코딩 테스트에서의 이진 탐색
 
 단순히 앞의 코드를 보고 이진 탐색이 단순하다고 느낄 수 있지만, 정작 참고할 소스코드가 없는 상태에서 이진 탐색의 소스코드를 구현하는 것은 상당히 어려운 작업이 될 수 있다.  
