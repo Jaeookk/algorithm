@@ -1,4 +1,5 @@
 # https://softeer.ai/practice/info.do?idx=1&eid=584
+<<<<<<< HEAD
 import sys
 
 if __name__ == "__main__":
@@ -23,3 +24,5 @@ if __name__ == "__main__":
         now += a
 
     print(answer)
+=======
+>>>>>>> 574e77ee67793f6b6bcd6f59386393c527066173
