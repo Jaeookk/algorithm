@@ -18,7 +18,10 @@ def dfs(i, value, add, sub, mul, div):
         if mul:
             dfs(i + 1, value * data[i], add, sub, mul - 1, div)
         if div:
-            dfs(i + 1, int(value / data[i]), add, sub, mul, div - 1)
+            x = abs(value) // data[i]
+            if value < 0:
+                x = -x
+            dfs(i + 1, x, add, sub, mul, div - 1)
 
 
 def main():
@@ -34,5 +37,5 @@ if __name__ == "__main__":
     data = list(map(int, input().split()))
     add, sub, mul, div = map(int, input().split())
 
-    result = {"max_value": -1e9, "min_value": 1e9}
+    result = {"max_value": -1e10, "min_value": 1e10}
     main()
