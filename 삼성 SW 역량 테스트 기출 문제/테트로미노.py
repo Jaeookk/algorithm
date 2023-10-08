@@ -24,11 +24,11 @@ def T(y, x):
         sum = arr[y][x]
         check = 1
         for i in range(4):
-            if i == k: # 상하좌우 중 하나씩 제외시키기.
+            if i == k:  # 상하좌우 중 하나씩 제외시키기.
                 continue
             yy = y + dy[i]
             xx = x + dx[i]
-            if yy < 0 or xx < 0 or yy >= n or xx >= m: # 범위를 벗어나면
+            if yy < 0 or xx < 0 or yy >= n or xx >= m:  # 범위를 벗어나면
                 check = 0
                 break
             sum += arr[yy][xx]
@@ -59,3 +59,49 @@ if __name__ == "__main__":
     # 따라서 DFS 전략을 쓰되, "ㅗ" 모양 블럭의 경우를 따로 처리해야 한다.
 
     # 물론 완전탐색을 사용하여, 가능한 도형의 모양을 미리 정의하고 해도 된다.
+
+
+# Python3 통과 코드
+# import sys
+# input = sys.stdin.readline
+
+
+# def dfs(x, y, step, total):
+#     global answer
+
+#     if step == 4:
+#         answer = max(answer, total)
+#         return
+
+#     for dx, dy in d:
+#         nx = x + dx
+#         ny = y + dy
+
+#         if 0 <= nx < N and 0 <= ny < M and not visited[nx][ny]:
+#             if step == 2:
+#                 visited[nx][ny] = True
+#                 dfs(x,y,step+1,total+board[nx][ny])
+#                 visited[nx][ny] = False
+
+#             visited[nx][ny] = True
+#             dfs(nx,ny,step+1,total+board[nx][ny])
+#             visited[nx][ny] = False
+
+
+# N, M = map(int, input().split())
+# board = [list(map(int, input().split())) for _ in range(N)]
+# max_val = max(map(max, board))
+
+# d = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+
+# visited = [[False] * M for _ in range(N)]
+
+# answer = 0
+
+# for i in range(N):
+#         for j in range(M):
+#             visited[i][j] = True
+#             dfs(i, j, 1, board[i][j])  # 모든 칸에 대해서 검사
+#             visited[i][j] = False
+
+# print(answer)
