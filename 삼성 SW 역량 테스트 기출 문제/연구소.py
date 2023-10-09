@@ -1,68 +1,79 @@
 import sys
+from collections import deque
 
 f = sys.stdin.readline
 n, m = map(int, f().split())
 
-graph = []  # 초기 맵 리스트
-temp = [[0] * m for _ in range(n)]  # 벽을 설치한 뒤의 맵 리스트
+graph = []
 for _ in range(n):
-    graph.append(list(map(int, input().split())))
+    a = list(map(int, f().split()))
+    graph.append(a)
 
-# 상 하 좌 우
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
+wall_possible = []
+virus = []
 
-result = 0
 
-# DFS를 이용해 각 바이러스가 퍼지도록 하는 함수
-def virus(x, y):
+def get_combinations(arr, n):
+    result = []
+
+    if n == 0:
+        return [[]]  # []를 해버리면 C가 있는 for문에서 바로 종료됨. [[]]를 해야 for C in [[]]: 가 되어 C=[]가 된다.
+
+    for i in range(0, len(arr)):
+        elem = arr[i]
+        rest_arr = arr[i + 1:]
+        for C in get_combinations(rest_arr, n - 1):
+            result.append([elem] + C)
+            # print(f"n = {n}, elem = {elem}, rest_arr = {rest_arr}, result = {result}, C = {C}")
+
+    return result
+
+
+for i in range(n):
+    for j in range(m):
+        if graph[i][j] == 2:
+            virus.append((i, j))
+        elif graph[i][j] == 0:
+            wall_possible.append((i, j))
+
+wall_combi = get_combinations(wall_possible, 3)
+# print(wall_combi[0])
+
+
+def bfs(safe_count):  # 바이러스 퍼트리기
+    # 상 하 좌 우
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
     # 4가지 방향에 대하여
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-        # 상, 하, 좌, 우 중에서 바이러스가 퍼질 수 있는 경우
-        if nx >= 0 and nx < n and ny >= 0 and ny < m:
-            if temp[nx][ny] == 0:
-                # 해당 자리에 바이러스를 넣고 재귀적으로 다시 수행
-                temp[nx][ny] = 2
-                virus(nx, ny)
+    q = deque(virus)
+    visited = [[False for _ in range(m)] for _ in range(n)]
+
+    while q:
+        x, y = q.popleft()
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if nx >= 0 and nx < n and ny >= 0 and ny < m:
+                if not visited[nx][ny] and graph[nx][ny] == 0:
+                    safe_count -= 1
+                    visited[nx][ny] = True
+                    q.append((nx, ny))
+    return safe_count
 
 
-def check_score():
-    score = 0
-    for i in range(n):
-        for j in range(m):
-            if temp[i][j] == 0:
-                score += 1
-    return score
+def solution():
+    result = 0
+
+    for datas in wall_combi:
+        for i, j in datas:
+            graph[i][j] = 1
+
+        result = max(result, bfs(len(wall_possible) - 3))
+
+        for i, j in datas:
+            graph[i][j] = 0
+
+    return result
 
 
-# dfs를 이용해 울타리를 설치하면서, 매번 안전 영역의 크기 계산
-def dfs(count):
-    global result
-    # 벽이 3개 설치된 경우
-    if count == 3:
-        for i in range(n):
-            for j in range(m):
-                temp[i][j] = graph[i][j]
-        # 각 바이러스의 위치에서 전파 진행
-        for i in range(n):
-            for j in range(m):
-                if temp[i][j] == 2:
-                    virus(i, j)
-        # 안전 영역의 최대값 계산
-        result = max(result, check_score())
-        return
-    # 빈 공간에 벽 설치
-    for i in range(n):
-        for j in range(m):
-            if graph[i][j] == 0:
-                graph[i][j] = 1
-                count += 1
-                dfs(count)
-                graph[i][j] = 0
-                count -= 1
-
-
-dfs(0)
-print(result)
+print(solution())
